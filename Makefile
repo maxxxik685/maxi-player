@@ -16,14 +16,18 @@ SRC = \
 	src/audio/player.c \
 	src/playlist.c \
 	src/search.c \
-    src/media_keys.c
+	src/media_keys.c
 
 OUT = maxi-player
 
+LDLIBS = -lmpg123 -lpulse-simple -lpulse -pthread
 
-all:
-	$(CC) $(CFLAGS) $(SRC) -o $(OUT) -lmpg123 -lpulse-simple -lpulse -pthread
+all: $(OUT)
 
+$(OUT): $(SRC)
+	$(CC) $(CFLAGS) $(SRC) -o $@ $(LDLIBS)
 
 clean:
 	rm -f $(OUT)
+
+.PHONY: all clean
